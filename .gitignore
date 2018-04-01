@@ -1,0 +1,7 @@
+venv
+*.pyc
+staticfiles
+environment.sh
+.idea*
+.env
+/polls/files/chromedriver.exe
