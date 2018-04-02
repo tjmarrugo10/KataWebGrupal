@@ -98,35 +98,47 @@ class FunctionalTest(TestCase):
         botonIniciar = self.browser.find_element_by_id('id_login_')
         botonIniciar.click()
         self.browser.implicitly_wait(3)
+        self.browser.find_element_by_css_selector('body > div.alert.alert-success.success.float-message > a').click()
+
+        botonEditar = self.browser.find_element_by_id('id_editar')
+        botonEditar.click()
+        self.browser.implicitly_wait(3)
 
         nombre = self.browser.find_element_by_id('id_nombre')
+        nombre.clear()
         nombre.send_keys('Taidy')
 
         apellidos = self.browser.find_element_by_id('id_apellidos')
+        apellidos.clear()
         apellidos.send_keys('Marrugo')
 
         experiencia = self.browser.find_element_by_id('id_aniosExperiencia')
+        experiencia.clear()
         experiencia.send_keys('10')
 
-        self.browser.find_element_by_xpath(
-            "//select[@id='id_tiposDeServicio']/option[text()='Desarrollador Web']").click()
         telefono = self.browser.find_element_by_id('id_telefono')
-        telefono.send_keys('0000000000')
+        telefono.clear()
+        telefono.send_keys('123456')
 
         correo = self.browser.find_element_by_id('id_correo')
+        correo.clear()
         correo.send_keys('taidy@uniandes.edu.co')
 
         imagen = self.browser.find_element_by_id('id_imagen')
         ruta = os.path.join(sys.path[0], "polls/files", 'image.jpg')
         imagen.send_keys(ruta)
 
-        self.browser.find_element_by_id('id_editar').click()
+        self.browser.find_element_by_id('id_editar_').click()
+        self.browser.implicitly_wait(3)
+
+        botonEditar = self.browser.find_element_by_id('id_editar')
+        botonEditar.click()
         self.browser.implicitly_wait(3)
 
         nombre_2 = self.browser.find_element_by_id('id_nombre')
-        self.assertIn("Taidy", nombre_2.text)
+        self.assertIn("Taidy", nombre_2.get_attribute("value"))
 
         apellidos_2 = self.browser.find_element_by_id('id_apellidos')
-        self.assertIn("Marrugo", apellidos_2.text)
+        self.assertIn("Marrugo", apellidos_2.get_attribute("value"))
 
 
