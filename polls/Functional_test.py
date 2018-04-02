@@ -142,3 +142,21 @@ class FunctionalTest(TestCase):
         self.assertIn("Marrugo", apellidos_2.get_attribute("value"))
 
 
+    def test_comentario(self):
+        self.browser.get('http://localhost:8000')
+        link = self.browser.find_element_by_css_selector('#trabajadores > div:nth-child(1) > div > div.panel-body > a > span')
+        link.click()
+        correo = self.browser.find_element_by_id('correo')
+        correo.send_keys('ca.mendoza968@uniandes.edu.co')
+
+        comentario = self.browser.find_element_by_id('comentario')
+        comentario.send_keys('hola mundo')
+
+        botonEnviar = self.browser.find_element_by_css_selector('body > div:nth-child(2) > div > form > button')
+        botonEnviar.click()
+        self.browser.implicitly_wait(3)
+        span = self.browser.find_element(By.XPATH, '//h4[text()="ca.mendoza968@uniandes.edu.co"]')
+        self.assertIn('ca.mendoza968@uniandes.edu.co', span.text)
+
+        span_ = self.browser.find_element(By.XPATH, '//p[text()="hola mundo"]')
+        self.assertIn('hola mundo', span_.text)
